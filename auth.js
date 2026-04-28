@@ -6,16 +6,52 @@
   const CFG = window.DESTAQ_CONFIG || {};
   const SB_URL = (CFG.supabaseUrl || CFG.SUPABASE_URL || '').trim().replace(/\/+$/, '');
   const SB_KEY = (CFG.supabaseKey || CFG.SUPABASE_ANON_KEY || '').trim();
+  const PUBLIC_APP_FALLBACK = 'https://destaqlabs.com';
+
+  function isLocalHostName(hostname) {
+    const h = String(hostname || '').toLowerCase().trim();
+    return h === 'localhost' || h === '127.0.0.1' || h === '::1';
+  }
+
+  function sanitizeOriginCandidate(raw, { allowLocal = false } = {}) {
+    if (!raw || typeof raw !== 'string') return '';
+    const value = raw.trim();
+    if (!value) return '';
+    try {
+      const url = new URL(value);
+      if (url.protocol !== 'http:' && url.protocol !== 'https:') return '';
+      if (!allowLocal && isLocalHostName(url.hostname)) return '';
+      return `${url.protocol}//${url.host}`;
+    } catch (_) {
+      return '';
+    }
+  }
 
   function appOriginForAuthLinks() {
     try {
-      const explicit = String(CFG.AUTH_REDIRECT_ORIGIN || '').trim().replace(/\/+$/, '');
+      const envName = String(CFG.APP_ENV || '').toLowerCase();
+      const isProdLike = envName === 'production' || envName === 'prod';
+      const browserOrigin = sanitizeOriginCandidate(window.location?.origin || '', { allowLocal: true });
+      const runningLocally = (() => {
+        try {
+          const h = new URL(window.location?.href || '').hostname;
+          return isLocalHostName(h);
+        } catch (_) {
+          return false;
+        }
+      })();
+      const allowLocal = !isProdLike && runningLocally;
+
+      const explicit = sanitizeOriginCandidate(String(CFG.AUTH_REDIRECT_ORIGIN || ''), { allowLocal });
       if (explicit) return explicit;
-      const app = String(CFG.APP_URL || '').trim().replace(/\/+$/, '');
+
+      const app = sanitizeOriginCandidate(String(CFG.APP_URL || ''), { allowLocal: false });
       if (app) return app;
-      return (window.location?.origin || '').replace(/\/+$/, '');
+
+      if (browserOrigin && (allowLocal || !isLocalHostName(new URL(browserOrigin).hostname))) return browserOrigin;
+      return PUBLIC_APP_FALLBACK;
     } catch (_) {
-      return '';
+      return PUBLIC_APP_FALLBACK;
     }
   }
 

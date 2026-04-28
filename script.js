@@ -156,10 +156,19 @@ const owlCanvas = document.getElementById("hero-canvas");
 if (owlCanvas) {
     const ctx = owlCanvas.getContext("2d");
 
-    const frameCount = 150;
-    const currentFrame = index => (
-        `Imagens/quero_que_troque_202604240334_${index.toString().padStart(3, '0')}.jpg`
-    );
+    const heroFrameModules = import.meta.glob("./Imagens/quero_que_troque_202604240334_*.jpg", {
+        eager: true,
+        import: "default",
+    });
+    const heroFrameUrls = Object.keys(heroFrameModules)
+        .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
+        .map((k) => heroFrameModules[k]);
+    const frameCount = heroFrameUrls.length || 150;
+    const currentFrame = (index) => {
+        const i = Math.max(0, Math.min(frameCount - 1, index));
+        if (heroFrameUrls.length) return heroFrameUrls[i];
+        return `Imagens/quero_que_troque_202604240334_${i.toString().padStart(3, "0")}.jpg`;
+    };
 
     const images = [];
     const owlAnimation = { frame: 0 };
@@ -1232,8 +1241,14 @@ document.querySelectorAll('.neural-split-text').forEach(el => {
 
 // ===== 2ª ANIMAÇÃO: background frame-by-frame (mesma lógica da hero, usando Imagens1) =====
 (function initInfraFrameLoopScene() {
-    const INFRA_FRAME_BASE = "assets/Imagens1/Owl_carrying_box_202604231805_";
-    const INFRA_FRAME_COUNT = 80;
+    const infraFrameModules = import.meta.glob("./assets/Imagens1/Owl_carrying_box_202604231805_*.jpg", {
+        eager: true,
+        import: "default",
+    });
+    const infraFrameUrls = Object.keys(infraFrameModules)
+        .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
+        .map((k) => infraFrameModules[k]);
+    const INFRA_FRAME_COUNT = infraFrameUrls.length || 80;
     const INFRA_LOOP_SECONDS = 4.2;
 
     let infraTween = null;
@@ -1244,7 +1259,8 @@ document.querySelectorAll('.neural-split-text').forEach(el => {
 
     function infraFrameUrl(index) {
         const i = Math.max(0, Math.min(INFRA_FRAME_COUNT - 1, index));
-        return `${INFRA_FRAME_BASE}${String(i).padStart(3, "0")}.jpg`;
+        if (infraFrameUrls.length) return infraFrameUrls[i];
+        return `assets/Imagens1/Owl_carrying_box_202604231805_${String(i).padStart(3, "0")}.jpg`;
     }
 
     function getInfraContext() {
