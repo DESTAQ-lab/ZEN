@@ -32,6 +32,82 @@
     }
   }
 
+  function cleanAuthArtifactsFromUrl() {
+    try {
+      const url = new URL(window.location.href);
+      const paramsToDrop = [
+        'code',
+        'type',
+        'error',
+        'error_code',
+        'error_description',
+        'access_token',
+        'refresh_token',
+        'expires_at',
+        'expires_in',
+        'token_type',
+      ];
+      let changed = false;
+      paramsToDrop.forEach((key) => {
+        if (url.searchParams.has(key)) {
+          url.searchParams.delete(key);
+          changed = true;
+        }
+      });
+
+      if (url.hash) {
+        const hashRaw = url.hash.startsWith('#') ? url.hash.slice(1) : url.hash;
+        const hashParams = new URLSearchParams(hashRaw);
+        let hashChanged = false;
+        paramsToDrop.forEach((key) => {
+          if (hashParams.has(key)) {
+            hashParams.delete(key);
+            hashChanged = true;
+          }
+        });
+        if (hashChanged) {
+          const nextHash = hashParams.toString();
+          url.hash = nextHash ? `#${nextHash}` : '';
+          changed = true;
+        }
+      }
+
+      if (changed) {
+        window.history.replaceState({}, document.title, `${url.pathname}${url.search}${url.hash}`);
+      }
+    } catch (_) {}
+  }
+
+  async function consumeAuthCallbackIfNeeded(client) {
+    if (!client) return;
+    let callbackError = null;
+    try {
+      const url = new URL(window.location.href);
+      const authType = url.searchParams.get('type');
+      const hasCode = url.searchParams.has('code');
+
+      if (hasCode) {
+        const { error } = await client.auth.exchangeCodeForSession(window.location.href);
+        if (error) {
+          callbackError = error;
+        } else if (authType === 'signup' && typeof PopupSystem !== 'undefined' && PopupSystem.toast) {
+          PopupSystem.toast({ icon: '✅', title: 'Email confirmado! Você já pode usar sua conta.', duration: 3500 });
+        }
+      }
+    } catch (err) {
+      callbackError = err;
+    } finally {
+      cleanAuthArtifactsFromUrl();
+    }
+
+    if (callbackError) {
+      logAuthWarn('[Auth] callback', callbackError);
+      if (typeof PopupSystem !== 'undefined' && PopupSystem.toast) {
+        PopupSystem.toast({ icon: '⚠️', title: mapAuthErrorMessage(callbackError), duration: 4200 });
+      }
+    }
+  }
+
   function safeErrMsg(err) {
     if (err == null) return '';
     if (typeof err === 'string') return err;
@@ -281,10 +357,6 @@
       const host = btn.closest('.nav-buttons');
       if (!host) return;
       e.preventDefault();
-      if (mode === 'signup') {
-        window.location.href = buildAuthRedirectUrl();
-        return;
-      }
       if (typeof window.openAuthModal === 'function') window.openAuthModal(mode);
       else if (import.meta.env.DEV) console.error('[DestaQ Auth] openAuthModal não está disponível.');
     }
@@ -336,6 +408,8 @@
       weak_password: 'Senha fraca. Use letras, números e pelo menos 8 caracteres.',
       same_password: 'A nova senha não pode ser igual à anterior.',
       over_request_rate_limit: 'Muitas tentativas. Aguarde um minuto e tente novamente.',
+      over_email_send_rate_limit: 'Muitas tentativas de envio de email. Aguarde alguns minutos e tente novamente.',
+      'Email rate limit exceeded': 'Muitas tentativas de envio de email. Aguarde alguns minutos e tente novamente.',
       request_timeout: 'Tempo esgotado. Verifique sua conexão.',
     };
     if (table[msg]) return table[msg];
@@ -659,6 +733,14 @@
     }
     const client = getSupabaseClient();
     if (!client) return;
+    const cooldownKey = `dq_pwd_reset_cooldown_${email.toLowerCase()}`;
+    const now = Date.now();
+    const cooldownUntil = Number(window.localStorage.getItem(cooldownKey) || '0');
+    if (cooldownUntil > now) {
+      const seconds = Math.ceil((cooldownUntil - now) / 1000);
+      showError('dq-login-error', `Aguarde ${seconds}s para solicitar novo email.`);
+      return;
+    }
     try {
       const redirectTo = buildAuthRedirectUrl('reset');
       const { error } = await client.auth.resetPasswordForEmail(email, { redirectTo });
@@ -666,6 +748,7 @@
         showError('dq-login-error', mapAuthErrorMessage(error));
         return;
       }
+      window.localStorage.setItem(cooldownKey, String(now + 60 * 1000));
       showError('dq-login-error', '📧 Se o email existir, você receberá o link de recuperação.');
       const el = document.getElementById('dq-login-error');
       if (el) {
@@ -702,6 +785,7 @@
     }
 
     try {
+      await consumeAuthCallbackIfNeeded(client);
       const {
         data: { session },
         error,
