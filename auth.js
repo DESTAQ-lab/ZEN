@@ -19,6 +19,19 @@
     }
   }
 
+  function buildAuthRedirectUrl(hash = '') {
+    const origin = appOriginForAuthLinks();
+    if (!origin) return `${window.location?.origin || ''}/${hash ? `#${hash}` : ''}`;
+    try {
+      const url = new URL('/', origin);
+      if (hash) url.hash = hash;
+      return url.toString();
+    } catch (_) {
+      const cleanOrigin = String(origin).replace(/\/+$/, '');
+      return `${cleanOrigin}/${hash ? `#${hash}` : ''}`;
+    }
+  }
+
   function safeErrMsg(err) {
     if (err == null) return '';
     if (typeof err === 'string') return err;
@@ -268,6 +281,10 @@
       const host = btn.closest('.nav-buttons');
       if (!host) return;
       e.preventDefault();
+      if (mode === 'signup') {
+        window.location.href = buildAuthRedirectUrl();
+        return;
+      }
       if (typeof window.openAuthModal === 'function') window.openAuthModal(mode);
       else if (import.meta.env.DEV) console.error('[DestaQ Auth] openAuthModal não está disponível.');
     }
@@ -550,7 +567,7 @@
     }
     setLoading('dq-signup-btn', true);
     try {
-      const redirect = `${appOriginForAuthLinks()}${window.location.pathname || '/'}`;
+      const redirect = buildAuthRedirectUrl();
       const { data, error } = await client.auth.signUp({
         email,
         password: pass,
@@ -615,7 +632,7 @@
       const { error } = await client.auth.resend({
         type: 'signup',
         email,
-        options: { emailRedirectTo: `${appOriginForAuthLinks()}${window.location.pathname || '/'}` },
+        options: { emailRedirectTo: buildAuthRedirectUrl() },
       });
       if (error) throw error;
       if (typeof PopupSystem !== 'undefined' && PopupSystem.toast) {
@@ -643,7 +660,7 @@
     const client = getSupabaseClient();
     if (!client) return;
     try {
-      const redirectTo = `${appOriginForAuthLinks()}${window.location.pathname || '/'}#reset`;
+      const redirectTo = buildAuthRedirectUrl('reset');
       const { error } = await client.auth.resetPasswordForEmail(email, { redirectTo });
       if (error) {
         showError('dq-login-error', mapAuthErrorMessage(error));
