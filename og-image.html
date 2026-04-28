@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Graph Image | DestaQ</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-dark: #080614;
+            --accent-gold: #F5C542;
+            --accent-purple: #B533FF;
+            --accent-pink: #FF4D8F;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            /* Fundo escuro externo apenas para facilitar visualização no navegador */
+            background-color: #111; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Container principal 1200x630 exato para screenshot */
+        .og-canvas {
+            position: relative;
+            width: 1200px;
+            height: 630px;
+            background-color: var(--primary-dark);
+            overflow: hidden;
+            box-sizing: border-box;
+            color: #FFFFFF;
+        }
+
+        /* Gradiente Radial no canto superior direito */
+        .radial-gradient {
+            position: absolute;
+            top: -300px;
+            right: -300px;
+            width: 1000px;
+            height: 1000px;
+            background: radial-gradient(circle, rgba(181, 51, 255, 0.25) 0%, rgba(8, 6, 20, 0) 60%);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        /* -------------------------
+           Brand e Tagline
+        -------------------------- */
+        .brand-container {
+            position: absolute;
+            top: 100px;
+            left: 100px;
+            z-index: 2;
+        }
+
+        .logo-text {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 72px;
+            margin: 0;
+            letter-spacing: 4px;
+            color: #FFFFFF;
+            line-height: 1;
+        }
+
+        .logo-q {
+            color: var(--accent-gold);
+        }
+
+        .tagline {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 24px;
+            color: var(--accent-gold);
+            margin: 20px 0 0 0;
+            letter-spacing: 1px;
+        }
+
+        /* -------------------------
+           Metric Cards (Glassmorphism)
+        -------------------------- */
+        .cards-container {
+            position: absolute;
+            top: 270px;
+            left: 100px;
+            display: flex;
+            gap: 40px;
+            z-index: 2;
+        }
+
+        .metric-card {
+            width: 306px;
+            height: 180px;
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(245, 197, 66, 0.4); /* Border Gold Sutil */
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+            padding: 20px;
+        }
+
+        .metric-value {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 64px;
+            background: linear-gradient(45deg, #FFFFFF, #e0e0e0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0 0 5px 0;
+            line-height: 1;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .metric-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.7);
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* -------------------------
+           Rodapé (URL)
+        -------------------------- */
+        .footer-url {
+            position: absolute;
+            bottom: 50px;
+            left: 100px;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.4); /* Cor Secundária */
+            z-index: 2;
+            letter-spacing: 1px;
+        }
+
+        /* -------------------------
+           Decoração Geométrica
+        -------------------------- */
+        .shape-triangle {
+            position: absolute;
+            bottom: 70px;
+            right: 180px;
+            width: 0;
+            height: 0;
+            border-left: 60px solid transparent;
+            border-right: 60px solid transparent;
+            border-bottom: 100px solid var(--accent-pink);
+            transform: rotate(25deg);
+            opacity: 0.9;
+            z-index: 1;
+        }
+
+        .shape-circle {
+            position: absolute;
+            bottom: 150px;
+            right: 80px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 6px solid var(--accent-gold);
+            background: transparent;
+            transform: rotate(-15deg);
+            opacity: 0.6;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Canvas de 1200x630 para o Screenshot -->
+    <div class="og-canvas">
+        
+        <!-- Fundo e Luzes -->
+        <div class="radial-gradient"></div>
+
+        <!-- Decorações Geométricas CSS Puro -->
+        <div class="shape-triangle"></div>
+        <div class="shape-circle"></div>
+
+        <!-- Header: Logo e Tagline -->
+        <div class="brand-container">
+            <h1 class="logo-text">DESTA<span class="logo-q">Q</span></h1>
+            <h2 class="tagline">Ecossistema B2B de E-commerce Premium</h2>
+        </div>
+
+        <!-- Cards Metrics Glassmorphism -->
+        <div class="cards-container">
+            <div class="metric-card">
+                <p class="metric-value">R$ 2.4B</p>
+                <p class="metric-label">GMV Processado</p>
+            </div>
+            <div class="metric-card">
+                <p class="metric-value">12.000+</p>
+                <p class="metric-label">Sellers Ativos</p>
+            </div>
+            <div class="metric-card">
+                <p class="metric-value">4</p>
+                <p class="metric-label">Plataformas Integradas</p>
+            </div>
+        </div>
+
+        <!-- URL -->
+        <p class="footer-url">destaq.com.br</p>
+        
+    </div>
+</body>
+</html>

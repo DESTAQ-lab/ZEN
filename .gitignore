@@ -1,0 +1,13 @@
+# Variáveis locais (nunca commitar)
+.env
+.env.local
+.env.*.local
+
+# Build Vite
+dist/
+
+# Dependências
+node_modules/
+
+# Se alguém voltar a colocar segredos em config.js, descomente:
+# config.js

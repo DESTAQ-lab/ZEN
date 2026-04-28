@@ -1,0 +1,4 @@
+project_id = "fxqcjizpnlzctwudbequ"
+
+[functions.community-ingest]
+verify_jwt = false

@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>DestaQ | Ecossistema B2B para E-commerce e Performance</title>
+    <meta name="description" content="O DestaQ é a plataforma definitiva para escalar seu e-commerce B2B. Conecte-se com fornecedores, analise métricas em tempo real e domine o mercado digital com inteligência.">
+
+    <!-- Configuração central (carregar antes dos demais scripts) -->
+    <script type="module" src="/config.js"></script>
+    
+    <!-- Fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,300,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+
+    <!-- Robots -->
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://destaq.com.br/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://destaq.com.br/">
+    <meta property="og:title" content="DestaQ | Ecossistema B2B para E-commerce e Performance">
+    <meta property="og:description" content="O DestaQ é a plataforma definitiva para escalar seu e-commerce B2B. Conecte-se com fornecedores, analise métricas em tempo real e domine o mercado digital com inteligência.">
+    <meta property="og:image" content="https://destaq.com.br/assets/og-image-destaq.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://destaq.com.br/">
+    <meta property="twitter:title" content="DestaQ | Ecossistema B2B para E-commerce e Performance">
+    <meta property="twitter:description" content="Escalone sua operação digital com o ecossistema B2B do DestaQ. Dados, performance e parceiros integrados para máxima conversão.">
+    <meta property="twitter:image" content="https://destaq.com.br/assets/og-image-destaq.jpg">
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "DestaQ",
+      "operatingSystem": "Web",
+      "applicationCategory": "BusinessApplication",
+      "description": "Plataforma B2B para gestão e escalabilidade de operações de e-commerce.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "BRL"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "reviewCount": "1200"
+      }
+    }
+    </script>
+    
+    <!-- AOS CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    
+    <!-- Font Awesome 6 (Ícones de plataformas) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="network.css">
+
+    <!-- Supabase JS SDK (auth + Network) — antes dos scripts no body -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <div id="nav-progress"></div>
+    <!-- Fallback de Acessibilidade / JavaScript Desabilitado -->
+    <noscript>
+        <div style="background: var(--accent-pink); color: white; padding: 20px; text-align: center; z-index: 9999; position: relative; font-family: 'Inter', sans-serif;">
+            <strong>Aviso de Acessibilidade:</strong> Para visualizar a experiência premium interativa em 60fps desta página, por favor, ative o JavaScript no seu navegador. O layout estático seguro está sendo exibido.
+        </div>
+    </noscript>
+
+    <!-- Splash Screen GSAP -->
+    <div id="splash-screen">
+        <div class="splash-logo">
+            <span class="splash-char">D</span>
+            <span class="splash-char">e</span>
+            <span class="splash-char">s</span>
+            <span class="splash-char">t</span>
+            <span class="splash-char">a</span>
+            <span class="splash-char splash-gold">Q</span>
+        </div>
+    </div>
+    
+    <!-- Floating 3D Elements Container (Gerados via JS) -->
+    <div class="floating-container" id="floating-container">
+        <!-- JS insere os polígonos randomizados aqui -->
+    </div>
+    
+    <!-- Header retrátil (desce ao passar o rato na faixa superior) -->
+    <div class="dq-top-nav-reveal">
+        <nav class="dq-nav dq-nav--retractable" aria-label="Cabeçalho principal">
+            <div class="dq-top-nav-reveal__peek" aria-hidden="true">
+                <span class="dq-top-nav-reveal__peek-line"></span>
+                <span class="dq-top-nav-reveal__peek-text">Menu</span>
+            </div>
+            <div class="nav-container glass-panel" style="padding: 10px 30px; border-radius: 50px;">
+                <a href="#hero" class="dq-logo">Desta<span style="color: var(--accent-gold);">Q</span></a>
+                <div class="nav-header-spacer" aria-hidden="true"></div>
+                <div class="nav-buttons" style="display: flex; gap: 1rem;">
+                    <button type="button" class="btn-ghost" data-auth-open="login" data-track="nav_login_click" aria-label="Abrir janela de entrar na conta">Entrar</button>
+                    <button type="button" class="btn-gold" data-auth-open="signup" data-track="nav_signup_click" aria-label="Abrir janela de criar conta gratuita">Começar grátis</button>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Secções: rail lateral com seta; .nav-tab mantém o script de abas -->
+    <nav class="dq-sections-rail glass-panel" aria-label="Navegar entre secções do site">
+        <ul class="dq-sections-rail__list">
+            <li>
+                <a href="#produtos" class="nav-tab dq-rail-tab" data-target="aba-produtos" aria-label="Ir para Produtos">
+                    <svg class="dq-rail-arrow" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18l6-6-6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="dq-rail-label">Produtos</span>
+                </a>
+            </li>
+            <li>
+                <a href="#comunidade" class="nav-tab dq-rail-tab" data-target="aba-comunidade" aria-label="Ir para Comunidade">
+                    <svg class="dq-rail-arrow" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18l6-6-6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="dq-rail-label">Comunidade</span>
+                </a>
+            </li>
+            <li>
+                <a href="#network" class="nav-tab dq-rail-tab" data-target="aba-network" aria-label="Ir para Network">
+                    <svg class="dq-rail-arrow" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18l6-6-6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="dq-rail-label">Network</span>
+                </a>
+            </li>
+            <li>
+                <a href="#plataformas" class="nav-tab dq-rail-tab" data-target="aba-plataformas" aria-label="Ir para Plataformas">
+                    <svg class="dq-rail-arrow" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18l6-6-6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="dq-rail-label">Plataformas</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress-container" id="progressContainer">
+        <div class="scroll-progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- WRAPPER PARA O SISTEMA DE ABAS -->
+    <div id="tabs-container">
+
+        <div id="aba-home" class="tab-pane active" style="display: block;">
+    <!-- Hero Section Premium (Light Theme B2B) -->
+    <section class="hero snap-section gsap-section" id="hero">
+        <div class="hero-bg"></div>
+        <canvas id="bg-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.35; pointer-events: none;"></canvas>
+        <canvas id="hero-canvas" class="hero-owl-bg-canvas" aria-hidden="true"></canvas>
+        
+        <div class="container hero-content hero-content-split" style="z-index: 2; position: relative; min-height: 90vh; padding-top: 120px;">
+            <div class="hero-text-col hero-text-overlay hero-text-right" style="text-align: left;">
+                
+                <span class="eco-tag fade-in" style="margin-bottom: 1.5rem; display: inline-flex; align-items: center; gap: 8px; font-size: 12px; padding: 6px 16px; border-radius: 20px; background: rgba(0,0,0,0.03); border: 0.5px solid rgba(0, 0, 0, 0.1); color: var(--text-primary); font-family: 'Satoshi', 'Inter', sans-serif; font-weight: 600;">
+                    Eletrônicos &middot; Utilidades &middot; Beleza &middot; Moda &middot; Pet &middot; Games
+                </span>
+                
+                <h1 class="hero-title advanced-stagger-text gsap-title" style="font-size: 3.25rem; line-height: 1.1; margin-bottom: 1rem; font-family: 'Satoshi', sans-serif; font-weight: 800; color: var(--text-primary);">MAIS QUE PRODUTOS, UMA <span class="hero-highlight">ESTRATÉGIA</span> PARA O SEU LUCRO.</h1>
+                
+                <p class="hero-subtitle typewriter-text" style="font-size: 1.1rem; color: var(--text-secondary); max-width: 560px; margin: 0 0 1.5rem; line-height: 1.6; font-family: 'Inter', sans-serif;">O verdadeiro lucro não está na venda — está na compra. Acesse o maior catálogo multinichos do Brasil com +10.000 SKUs prontos para entrega e maximize sua margem em cada pedido.</p>
+                
+                <div class="social-proof fade-in" style="display: flex; align-items: center; justify-content: flex-start; gap: 12px; margin-bottom: 2rem;">
+                    <div class="avatars" style="display: flex;">
+                        <div style="width: 28px; height: 28px; border-radius: 50%; background: #8B5CF6; color: white; display: flex; align-items: center; justify-content: center; font-size: 11px; border: 1.5px solid #fff; z-index: 3; font-family: 'Inter', sans-serif;">M</div>
+                        <div style="width: 28px; height: 28px; border-radius: 50%; background: #EC4899; color: white; display: flex; align-items: center; justify-content: center; font-size: 11px; border: 1.5px solid #fff; margin-left: -8px; z-index: 2; font-family: 'Inter', sans-serif;">R</div>
+                        <div style="width: 28px; height: 28px; border-radius: 50%; background: var(--accent-gold); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; border: 1.5px solid #fff; margin-left: -8px; z-index: 1; font-weight: bold; font-family: 'Inter', sans-serif;">+</div>
+                    </div>
+                    <span style="font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-secondary); font-weight: 600;">+5k clientes ativos &middot; +10k pedidos enviados &middot; R$ 50M+ processados</span>
+                </div>
+
+                <div class="hero-buttons fade-in" style="display: flex; gap: 16px; align-items: center; justify-content: flex-start;">
+                    <button id="home-cta-catalogo" class="btn" style="background: var(--gradient-button); border-radius: 12px; padding: 14px 28px; color: #fff; font-weight: 600; font-family: 'Satoshi', sans-serif; border: none; cursor: pointer; transition: opacity 0.2s; font-size: 14px;">Acessar Catálogo Grátis &rarr;</button>
+                    <button id="home-cta-consultora" class="btn btn-ghost" style="background: transparent; border-radius: 12px; padding: 14px 28px; color: var(--text-primary); font-weight: 600; font-family: 'Satoshi', sans-serif; border: 1.5px solid var(--text-primary); cursor: pointer; transition: background 0.2s; font-size: 14px;">Falar com Consultora</button>
+                </div>
+
+                <p class="microcopy fade-in" style="font-family: 'Inter', sans-serif; font-size: 11px; color: rgba(0,0,0,0.5); margin-top: 16px; font-weight: 500; letter-spacing: 0.3px;">Sem burocracia &middot; Entrega expressa &middot; Suporte humanizado em português</p>
+                
+            </div>
+        </div>
+        
+        <div class="scroll-indicator" data-aos="fade-in" data-aos-delay="800" style="z-index: 2; border-color: var(--text-primary);">
+            <span style="color: var(--text-primary);">Descubra a DestaQ</span>
+            <div class="mouse" style="border-color: var(--text-primary);"></div>
+        </div>
+    </section>
+
+    <section class="how-we-work-section" id="how-we-work">
+        <div class="container">
+            <div class="how-we-work-header" data-aos="fade-up">
+                <span class="how-we-work-badge">Como funciona</span>
+                <h2>Seu processo de compra, claro e sem complicacao</h2>
+                <p>Um fluxo simples, visual e rapido para voce comprar com seguranca.</p>
+            </div>
+
+            <div class="how-we-work-grid">
+                <article class="how-we-work-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="how-we-work-card-top">
+                        <div class="how-we-work-icon-wrap" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                        </div>
+                        <span class="how-we-work-step">Passo 1</span>
+                    </div>
+                    <h3>Atendimento Humanizado</h3>
+                    <p>Entre em contato diretamente com nossas vendedoras. Um atendimento rapido e focado no que voce precisa.</p>
+                </article>
+
+                <article class="how-we-work-card" data-aos="fade-up" data-aos-delay="80">
+                    <div class="how-we-work-card-top">
+                        <div class="how-we-work-icon-wrap" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="5" width="18" height="14" rx="2" ry="2"></rect>
+                                <circle cx="8.5" cy="10.5" r="1.5"></circle>
+                                <path d="M21 15l-4.2-4.2a1.8 1.8 0 0 0-2.5 0L6 19"></path>
+                                <path d="M17 3v4"></path>
+                                <path d="M15 5h4"></path>
+                            </svg>
+                        </div>
+                        <span class="how-we-work-step">Passo 2</span>
+                    </div>
+                    <h3>Envie sua Referencia</h3>
+                    <p>Tem a foto do que procura? Pode nos enviar! Trabalhamos com imagens de referencia para encontrar exatamente o seu produto.</p>
+                </article>
+
+                <article class="how-we-work-card" data-aos="fade-up" data-aos-delay="160">
+                    <div class="how-we-work-card-top">
+                        <div class="how-we-work-icon-wrap" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 7h18"></path>
+                                <path d="M8 17l4-4 4 4"></path>
+                                <path d="M12 13v7"></path>
+                                <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                            </svg>
+                        </div>
+                        <span class="how-we-work-step">Passo 3</span>
+                    </div>
+                    <h3>O Melhor Preco</h3>
+                    <p>Nossa equipe entra em acao para buscar o melhor preco de atacado do mercado para voce.</p>
+                </article>
+
+                <article class="how-we-work-card" data-aos="fade-up" data-aos-delay="240">
+                    <div class="how-we-work-card-top">
+                        <div class="how-we-work-icon-wrap" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 8l9-5 9 5-9 5-9-5z"></path>
+                                <path d="M3 16l9 5 9-5"></path>
+                                <path d="M3 12l9 5 9-5"></path>
+                                <path d="M9 12l2 2 4-4"></path>
+                            </svg>
+                        </div>
+                        <span class="how-we-work-step">Passo 4</span>
+                    </div>
+                    <h3>Retirada Expressa</h3>
+                    <p>Agilizamos todo o processo. Seu pedido fica separado e pronto para ser retirado em ate 3 dias uteis.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="sobre-destaq-section" data-aos="fade-up">
+        <div class="container sobre-grid">
+            
+            <div class="sobre-texto">
+                <span class="sobre-tag">// QUEM SOMOS</span>
+                <h2 class="sobre-titulo">Não somos só uma distribuidora.<br>
+                Somos a sua <span class="text-gold">parceira de margem.</span></h2>
+                <p class="sobre-descricao">
+                    A Destaq nasceu com uma premissa simples: o lojista que compra melhor
+                    é o que vende mais. Por isso, mais do que oferecer produtos, entregamos
+                    estratégia — consultoras especializadas, estoque real a pronta entrega
+                    e um catálogo multinichos curado para você maximizar cada real investido.
+                </p>
+                <div class="sobre-diferenciais">
+                    <div class="diferencial-item">
+                        <span class="diferencial-icon">⚡</span>
+                        <div>
+                            <strong>Estoque real</strong>
+                            <p>Sem dropshipping. Produtos físicos com envio imediato.</p>
+                        </div>
+                    </div>
+                    <div class="diferencial-item">
+                        <span class="diferencial-icon">🎯</span>
+                        <div>
+                            <strong>Consultoria de compra</strong>
+                            <p>Nossas consultoras ajudam você a montar o mix certo.</p>
+                        </div>
+                    </div>
+                    <div class="diferencial-item">
+                        <span class="diferencial-icon">📦</span>
+                        <div>
+                            <strong>Logística ágil</strong>
+                            <p>Envios para todo o Brasil com rastreio detalhado.</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-gold" onclick="document.getElementById('demo-cta').scrollIntoView({behavior:'smooth'})">
+                    <span class="btn-text">Quero ser parceiro →</span>
+                </button>
+            </div>
+
+            <div class="sobre-visual">
+                <div class="sobre-card-flutuante glass-panel">
+                    <div class="sobre-stat-row">
+                        <div class="sobre-stat">
+                            <span class="sobre-stat-num">+10k</span>
+                            <span class="sobre-stat-label">Pedidos enviados</span>
+                        </div>
+                        <div class="sobre-stat">
+                            <span class="sobre-stat-num">+5k</span>
+                            <span class="sobre-stat-label">Clientes ativos</span>
+                        </div>
+                        <div class="sobre-stat">
+                            <span class="sobre-stat-num">24h</span>
+                            <span class="sobre-stat-label">Suporte humano</span>
+                        </div>
+                    </div>
+                    <div class="sobre-nichos-tags">
+                        <span class="nicho-tag">💻 Tech</span>
+                        <span class="nicho-tag">💄 Beleza</span>
+                        <span class="nicho-tag">🏠 Casa</span>
+                        <span class="nicho-tag">🐾 Pet</span>
+                        <span class="nicho-tag">🎮 Games</span>
+                        <span class="nicho-tag">👗 Moda</span>
+                        <span class="nicho-tag">🏋️ Esporte</span>
+                        <span class="nicho-tag">💊 Saúde</span>
+                    </div>
+                    <p class="sobre-card-cta">Multinichos para qualquer modelo de negócio</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="infra-video-scroll-scene" id="infra-video-scroll-scene">
+        <div class="infra-video-pin-panel" id="infra-video-pin-panel">
+            <div class="infra-video-bg-wrap" aria-hidden="true">
+                <canvas id="infra-bg-canvas" class="infra-bg-canvas" aria-hidden="true"></canvas>
+                <div class="infra-bg-frame-stack">
+                    <img
+                        id="infra-bg-frame-a"
+                        class="infra-bg-frame-img infra-bg-frame-visible"
+                        src="assets/Imagens1/Owl_carrying_box_202604231805_000.jpg"
+                        alt=""
+                        decoding="sync"
+                        fetchpriority="low"
+                        draggable="false"
+                    >
+                    <img
+                        id="infra-bg-frame-b"
+                        class="infra-bg-frame-img"
+                        src="assets/Imagens1/Owl_carrying_box_202604231805_000.jpg"
+                        alt=""
+                        decoding="sync"
+                        fetchpriority="low"
+                        draggable="false"
+                    >
+                </div>
+                <div class="infra-video-veil"></div>
+            </div>
+            <div class="infra-video-content-stack">
+    <section class="funcionalidades-section">
+        <div class="container">
+            <div class="funcionalidades-header" data-aos="fade-up">
+                <span class="sobre-tag">// O QUE VOCÊ ENCONTRA AQUI</span>
+                <h2 class="funcionalidades-titulo">Uma infraestrutura completa para <span class="text-gold">comprar melhor.</span></h2>
+            </div>
+            
+            <div class="funcionalidades-grid">
+                
+                <div class="func-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="func-icon-wrap" style="background: rgba(37,99,235,0.08);">
+                        <svg viewBox="0 0 24 24" width="28" height="28" stroke="#2563EB" stroke-width="1.5" fill="none" stroke-linecap="round">
+                            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                        </svg>
+                    </div>
+                    <h3>Catálogo Inteligente</h3>
+                    <p>Filtros avançados por nicho, categoria e margem. Estoque em tempo real para você comprar sem sustos.</p>
+                    <span class="func-tag">+10.000 SKUs</span>
+                </div>
+
+                <div class="func-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="func-icon-wrap" style="background: rgba(197,160,89,0.1);">
+                        <svg viewBox="0 0 24 24" width="28" height="28" stroke="#C5A059" stroke-width="1.5" fill="none" stroke-linecap="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                        </svg>
+                    </div>
+                    <h3>Suporte Humanizado</h3>
+                    <p>Consultoras especializadas prontas para te ajudar a montar o mix certo e maximizar a sua margem de compra.</p>
+                    <span class="func-tag">Resposta em 24h</span>
+                </div>
+
+                <div class="func-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="func-icon-wrap" style="background: rgba(16,185,129,0.08);">
+                        <svg viewBox="0 0 24 24" width="28" height="28" stroke="#10B981" stroke-width="1.5" fill="none" stroke-linecap="round">
+                            <rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+                            <circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+                        </svg>
+                    </div>
+                    <h3>Logística Express</h3>
+                    <p>Envios rápidos para todo o Brasil com rastreamento detalhado. Seu cliente recebe, você recebe de volta em vendas.</p>
+                    <span class="func-tag">Entrega em todo BR</span>
+                </div>
+
+                <div class="func-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="func-icon-wrap" style="background: rgba(139,92,246,0.08);">
+                        <svg viewBox="0 0 24 24" width="28" height="28" stroke="#8B5CF6" stroke-width="1.5" fill="none" stroke-linecap="round">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                        </svg>
+                    </div>
+                    <h3>Área do Lojista</h3>
+                    <p>Conteúdos exclusivos para você aprender a vender mais: estratégias de nicho, tendências e dicas de margem.</p>
+                    <span class="func-tag">Em breve</span>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section" id="stats">
+        <div class="container">
+            <div class="stats-bar glass-panel" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; padding: 2rem;">
+                <div class="stat-box" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px;">
+                    <h3 class="stat-wrapper" style="font-family: 'Satoshi', sans-serif; font-size: 48px; margin: 0; line-height: 1; font-weight: 900; color: var(--accent-blue);">
+                        <span class="stat-prefix">R$ </span><span class="stat-counter" data-target="204" data-display="R$ 204B">0</span><span class="stat-suffix">B</span>
+                    </h3>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-primary); margin: 8px 0 2px 0; font-weight: 600;">GMV E-commerce BR</p>
+                    <span style="font-family: 'Inter', sans-serif; font-size: 10px; color: var(--text-secondary);">Fonte: ABComm 2024</span>
+                </div>
+
+                <div class="stat-box" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px;">
+                    <h3 class="stat-wrapper" style="font-family: 'Satoshi', sans-serif; font-size: 48px; margin: 0; line-height: 1; font-weight: 900; color: var(--accent-blue);">
+                        <span class="stat-counter" data-target="1.2" data-decimals="1" data-display="1.2M">0</span><span class="stat-suffix">M</span>
+                    </h3>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-primary); margin: 8px 0 2px 0; font-weight: 600;">Sellers ativos</p>
+                    <span style="font-family: 'Inter', sans-serif; font-size: 10px; color: var(--text-secondary);">Fonte: Neotrust Q4/2024</span>
+                </div>
+
+                <div class="stat-box" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px;">
+                    <h3 class="stat-wrapper" style="font-family: 'Satoshi', sans-serif; font-size: 48px; margin: 0; line-height: 1; font-weight: 900; color: var(--accent-blue);">
+                        <span class="stat-counter" data-target="395" data-display="395M">0</span><span class="stat-suffix">M</span>
+                    </h3>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-primary); margin: 8px 0 2px 0; font-weight: 600;">Pedidos/ano</p>
+                    <span style="font-family: 'Inter', sans-serif; font-size: 10px; color: var(--text-secondary);">Fonte: Neotrust 2024</span>
+                </div>
+
+                <div class="stat-box" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px;">
+                    <h3 class="stat-wrapper" style="font-family: 'Satoshi', sans-serif; font-size: 48px; margin: 0; line-height: 1; font-weight: 900; color: var(--accent-blue);">
+                        <span class="stat-prefix">+</span><span class="stat-counter" data-target="9.4" data-decimals="1" data-display="+9.4%">0</span><span class="stat-suffix">%</span>
+                    </h3>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-primary); margin: 8px 0 2px 0; font-weight: 600;">Crescimento YoY</p>
+                    <span style="font-family: 'Inter', sans-serif; font-size: 10px; color: var(--text-secondary);">Fonte: ABComm 2024</span>
+                </div>
+
+                <div class="stat-box" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px;">
+                    <h3 class="stat-wrapper" style="font-family: 'Satoshi', sans-serif; font-size: 48px; margin: 0; line-height: 1; font-weight: 900; color: var(--accent-blue);">
+                        <span class="stat-counter" data-target="63" data-display="63%">0</span><span class="stat-suffix">%</span>
+                    </h3>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-primary); margin: 8px 0 2px 0; font-weight: 600;">Compras via mobile</p>
+                    <span style="font-family: 'Inter', sans-serif; font-size: 10px; color: var(--text-secondary);">Fonte: Conversion 2024</span>
+                </div>
+
+                <div class="stat-box" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px;">
+                    <h3 class="stat-wrapper" style="font-family: 'Satoshi', sans-serif; font-size: 48px; margin: 0; line-height: 1; font-weight: 900; color: var(--accent-blue);">
+                        <span class="stat-prefix">R$ </span><span class="stat-counter" data-target="516" data-display="R$ 516">0</span>
+                    </h3>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-primary); margin: 8px 0 2px 0; font-weight: 600;">Ticket médio</p>
+                    <span style="font-family: 'Inter', sans-serif; font-size: 10px; color: var(--text-secondary);">Fonte: Ebit 2024</span>
+                </div>
+            </div>
+        </div>
+    </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Parceiros -->
+    <section class="partners-section">
+        <div class="container center-text">
+            <p class="section-subtitle fade-in" style="font-size: 0.9rem; letter-spacing: 2px; opacity: 0.6; margin-bottom: 2rem;">PARCEIROS VERIFICADOS</p>
+            <div class="partners-marquee fade-in">
+                <span>Unilever</span> &middot;
+                <span>P&G</span> &middot;
+                <span>Samsung</span> &middot;
+                <span>Nike</span> &middot;
+                <span>Apple</span> &middot;
+                <span>Nestlé</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section (home) -->
+    <section class="cta-final-section" id="cta-final">
+        <div class="container" style="padding: 5rem 5%; text-align: center;">
+            <p style="font-family:'Satoshi',sans-serif; font-size:0.85rem; letter-spacing:3px; color:var(--accent-gold); font-weight:700; margin-bottom:1.2rem;">// PRÓXIMO PASSO</p>
+            <h2 style="font-family:'Satoshi',sans-serif; font-size:clamp(2.2rem,5vw,3.8rem); color:#fff; font-weight:900; letter-spacing:-1px; margin-bottom:1.5rem; line-height:1.15;">
+                Pronto para <span style="color:var(--accent-gold)">escalar sua operação</span><br>e lucrar mais?
+            </h2>
+            <p style="font-family:'Inter',sans-serif; color:rgba(255,255,255,0.6); font-size:1.05rem; max-width:560px; margin:0 auto 2.5rem; line-height:1.7;">
+                Mais de 5.000 lojistas já usam a DestaQ para comprar melhor e vender mais — sem dropshipping, sem burocracia.
+            </p>
+            <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+                <button id="home-cta-solicitar-demo" class="btn btn-gold btn-large">
+                    <span class="btn-text">Solicitar demonstração →</span>
+                </button>
+                <button id="home-cta-falar-consultora-final" class="btn btn-ghost btn-large">
+                    <span class="btn-text">Falar com consultora</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+        </div>
+
+        <div id="aba-produtos" class="tab-pane" style="display: none;">
+
+    <!-- Cabeçalho simples do catálogo -->
+    <section class="catalogo-header-section" id="produtos">
+        <div class="container" style="padding-top: 120px; padding-bottom: 40px; text-align: center;">
+            <span class="tab-tag" data-aos="fade-up">CATÁLOGO DESTAQ</span>
+            <h1 class="tab-title" data-aos="fade-up" data-aos-delay="100" 
+                style="color: var(--text-primary);">
+                Encontre o produto certo para o seu <span class="text-gold">nicho.</span>
+            </h1>
+            <p data-aos="fade-up" data-aos-delay="200"
+               style="font-family: 'Inter', sans-serif; font-size: 1.1rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto;">
+                +10.000 SKUs com estoque real, pronta entrega e preço de atacado.
+            </p>
+        </div>
+    </section>
+
+    <section class="stats-section" id="stats-catalogo">
+        <div class="container">
+            <div class="stats-bar glass-panel" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; padding: 2rem;">
+                <div class="stat-box" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px;">
+                    <h3 class="stat-wrapper" style="font-family: 'Satoshi', sans-serif; font-size: 48px; margin: 0; line-height: 1; font-weight: 900; color: var(--accent-blue);">
+                        <span class="stat-prefix">R$ </span><span class="stat-counter" data-target="204" data-display="R$ 204B">0</span><span class="stat-suffix">B</span>
+                    </h3>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-primary); margin: 8px 0 2px 0; font-weight: 600;">GMV E-commerce BR</p>
+                    <span style="font-family: 'Inter', sans-serif; font-size: 10px; color: var(--text-secondary);">Fonte: ABComm 2024</span>
+                </div>
+
+                <div class="stat-box" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px;">
+                    <h3 class="stat-wrapper" style="font-family: 'Satoshi', sans-serif; font-size: 48px; margin: 0; line-height: 1; font-weight: 900; color: var(--accent-blue);">
+                        <span class="stat-counter" data-target="1.2" data-decimals="1" data-display="1.2M">0</span><span class="stat-suffix">M</span>
+                    </h3>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-primary); margin: 8px 0 2px 0; font-weight: 600;">Sellers ativos</p>
+                    <span style="font-family: 'Inter', sans-serif; font-size: 10px; color: var(--text-secondary);">Fonte: Neotrust Q4/2024</span>
+                </div>
+
+                <div class="stat-box" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px;">
+                    <h3 class="stat-wrapper" style="font-family: 'Satoshi', sans-serif; font-size: 48px; margin: 0; line-height: 1; font-weight: 900; color: var(--accent-blue);">
+                        <span class="stat-counter" data-target="395" data-display="395M">0</span><span class="stat-suffix">M</span>
+                    </h3>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-primary); margin: 8px 0 2px 0; font-weight: 600;">Pedidos/ano</p>
+                    <span style="font-family: 'Inter', sans-serif; font-size: 10px; color: var(--text-secondary);">Fonte: Neotrust 2024</span>
+                </div>
+
+                <div class="stat-box" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px;">
+                    <h3 class="stat-wrapper" style="font-family: 'Satoshi', sans-serif; font-size: 48px; margin: 0; line-height: 1; font-weight: 900; color: var(--accent-blue);">
+                        <span class="stat-prefix">+</span><span class="stat-counter" data-target="9.4" data-decimals="1" data-display="+9.4%">0</span><span class="stat-suffix">%</span>
+                    </h3>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-primary); margin: 8px 0 2px 0; font-weight: 600;">Crescimento YoY</p>
+                    <span style="font-family: 'Inter', sans-serif; font-size: 10px; color: var(--text-secondary);">Fonte: ABComm 2024</span>
+                </div>
+
+                <div class="stat-box" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px;">
+                    <h3 class="stat-wrapper" style="font-family: 'Satoshi', sans-serif; font-size: 48px; margin: 0; line-height: 1; font-weight: 900; color: var(--accent-blue);">
+                        <span class="stat-counter" data-target="63" data-display="63%">0</span><span class="stat-suffix">%</span>
+                    </h3>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-primary); margin: 8px 0 2px 0; font-weight: 600;">Compras via mobile</p>
+                    <span style="font-family: 'Inter', sans-serif; font-size: 10px; color: var(--text-secondary);">Fonte: Conversion 2024</span>
+                </div>
+
+                <div class="stat-box" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px;">
+                    <h3 class="stat-wrapper" style="font-family: 'Satoshi', sans-serif; font-size: 48px; margin: 0; line-height: 1; font-weight: 900; color: var(--accent-blue);">
+                        <span class="stat-prefix">R$ </span><span class="stat-counter" data-target="516" data-display="R$ 516">0</span>
+                    </h3>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-primary); margin: 8px 0 2px 0; font-weight: 600;">Ticket médio</p>
+                    <span style="font-family: 'Inter', sans-serif; font-size: 10px; color: var(--text-secondary);">Fonte: Ebit 2024</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="funcionalidades-section">
+        <div class="container">
+            <div class="funcionalidades-header" data-aos="fade-up">
+                <span class="sobre-tag">// O QUE VOCÊ ENCONTRA AQUI</span>
+                <h2 class="funcionalidades-titulo">Uma infraestrutura completa para <span class="text-gold">comprar melhor.</span></h2>
+            </div>
+            
+            <div class="funcionalidades-grid">
+                
+                <div class="func-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="func-icon-wrap" style="background: rgba(37,99,235,0.08);">
+                        <svg viewBox="0 0 24 24" width="28" height="28" stroke="#2563EB" stroke-width="1.5" fill="none" stroke-linecap="round">
+                            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                        </svg>
+                    </div>
+                    <h3>Catálogo Inteligente</h3>
+                    <p>Filtros avançados por nicho, categoria e margem. Estoque em tempo real para você comprar sem sustos.</p>
+                    <span class="func-tag">+10.000 SKUs</span>
+                </div>
+
+                <div class="func-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="func-icon-wrap" style="background: rgba(197,160,89,0.1);">
+                        <svg viewBox="0 0 24 24" width="28" height="28" stroke="#C5A059" stroke-width="1.5" fill="none" stroke-linecap="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                        </svg>
+                    </div>
+                    <h3>Suporte Humanizado</h3>
+                    <p>Consultoras especializadas prontas para te ajudar a montar o mix certo e maximizar a sua margem de compra.</p>
+                    <span class="func-tag">Resposta em 24h</span>
+                </div>
+
+                <div class="func-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="func-icon-wrap" style="background: rgba(16,185,129,0.08);">
+                        <svg viewBox="0 0 24 24" width="28" height="28" stroke="#10B981" stroke-width="1.5" fill="none" stroke-linecap="round">
+                            <rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+                            <circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+                        </svg>
+                    </div>
+                    <h3>Logística Express</h3>
+                    <p>Envios rápidos para todo o Brasil com rastreamento detalhado. Seu cliente recebe, você recebe de volta em vendas.</p>
+                    <span class="func-tag">Entrega em todo BR</span>
+                </div>
+
+                <div class="func-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="func-icon-wrap" style="background: rgba(139,92,246,0.08);">
+                        <svg viewBox="0 0 24 24" width="28" height="28" stroke="#8B5CF6" stroke-width="1.5" fill="none" stroke-linecap="round">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                        </svg>
+                    </div>
+                    <h3>Área do Lojista</h3>
+                    <p>Conteúdos exclusivos para você aprender a vender mais: estratégias de nicho, tendências e dicas de margem.</p>
+                    <span class="func-tag">Em breve</span>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="catalogo-section product-marketplace-section" id="niche-categories">
+      <div class="container">
+        <div class="product-marketplace-head">
+          <div>
+            <h2>Categorias para você</h2>
+            <p>Explore o catálogo B2B sem preço público. MOQ, tendência e disponibilidade para importação e revenda.</p>
+          </div>
+          <button type="button" class="btn-details product-open-request-btn" onclick="window.openProductRequestModal && window.openProductRequestModal()">
+            O que você procura?
+          </button>
+        </div>
+
+        <section class="product-highlight-block">
+          <h3 id="product-highlight-title">Categorias para você</h3>
+          <div id="product-highlight-grid" class="product-highlight-grid">
+            <p class="product-loading">Carregando categorias...</p>
+          </div>
+        </section>
+
+        <section class="product-catalog-block">
+          <div class="product-catalog-topbar">
+            <h3 id="product-catalog-title">Top 3 produtos mais vendidos no marketplace (RSS)</h3>
+          </div>
+          <div id="product-rss-top3-grid" class="product-rss-top3-grid">
+            <p class="product-loading">Carregando top 3 do RSS...</p>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="depoimentos-section">
+        <div class="container">
+            <div class="depoimentos-header" data-aos="fade-up">
+                <span class="sobre-tag">// FEEDBACKS REAIS</span>
+                <h2 class="funcionalidades-titulo">Quem compra na Destaq, <span class="text-gold">compra de novo.</span></h2>
+            </div>
+
+            <div class="depoimentos-grid">
+
+                <div class="depoimento-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="depoimento-estrelas">★★★★★</div>
+                    <p class="depoimento-texto">&ldquo;Comecei com eletrônicos e hoje vendo em 4 nichos diferentes. A consultora me ajudou a entender qual produto tem mais saída na minha região. Margem dobrou em 3 meses.&rdquo;</p>
+                    <div class="depoimento-autor">
+                        <div class="depoimento-avatar" style="background: linear-gradient(135deg, #2563EB, #8B5CF6);">M</div>
+                        <div>
+                            <strong>Marcos Oliveira</strong>
+                            <span>Seller - São Paulo, SP</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="depoimento-card depoimento-destaque" data-aos="fade-up" data-aos-delay="100">
+                    <div class="depoimento-estrelas">★★★★★</div>
+                    <p class="depoimento-texto">&ldquo;O estoque real faz toda diferença. Não tenho mais problema de vender produto que não tem. O rastreio também é ótimo — meus clientes adoram.&rdquo;</p>
+                    <div class="depoimento-autor">
+                        <div class="depoimento-avatar" style="background: linear-gradient(135deg, #EC4899, #C5A059);">R</div>
+                        <div>
+                            <strong>Rafaela Costa</strong>
+                            <span>Lojista online - Curitiba, PR</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="depoimento-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="depoimento-estrelas">★★★★★</div>
+                    <p class="depoimento-texto">&ldquo;Nunca pensei que ia entrar no nicho de pet. A Destaq me mostrou os dados e hoje é meu carro-chefe. O suporte é de verdade — falo com gente de verdade.&rdquo;</p>
+                    <div class="depoimento-autor">
+                        <div class="depoimento-avatar" style="background: linear-gradient(135deg, #10B981, #2563EB);">J</div>
+                        <div>
+                            <strong>João Fernandes</strong>
+                            <span>E-commerce - Fortaleza, CE</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+        </div> <!-- FIM DA ABA PRODUTOS -->
+
+        <!-- ABA 2: COMUNIDADE -->
+    <div id="aba-comunidade" class="tab-pane" style="display: none;">
+        <div id="community-content"></div>
+    </div> <!-- FIM DA ABA COMUNIDADE -->
+
+    <!-- ABA 3: NETWORK (conteúdo renderizado por network.js → renderNetworkTab) -->
+    <div id="aba-network" class="tab-pane" style="display: none;">
+        <div id="network-content"></div>
+    </div> <!-- FIM DA ABA NETWORK -->
+
+    <!-- ABA 4: PLATAFORMAS -->
+    <div id="aba-plataformas" class="tab-pane" style="display: none;">
+        <section class="tab-plataformas" id="plataformas">
+            <!-- Header -->
+            <div class="community-header">
+                <div class="container center-text fade-in">
+                    <span class="eco-tag" style="margin-bottom: 1rem; display: inline-block;">// PLATAFORMAS DESTAQ</span>
+                    <h1 class="tab-title">Ferramentas que fazem sua loja <span class="platform-highlight">crescer</span> <span class="platform-highlight">de verdade.</span></h1>
+                    <p class="tab-description" style="margin-bottom: 2.5rem;">
+                        Soluções modulares ou o ecossistema completo para acelerar o seu e-commerce.
+                    </p>
+                    
+                    <!-- Pricing Toggle -->
+                    <div class="pricing-toggle-wrapper">
+                        <span class="toggle-label">Mensal</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="pricing-toggle" checked>
+                            <span class="slider round"></span>
+                        </label>
+                        <span class="toggle-label active-label">Anual <span class="badge-discount">-20%</span></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pricing Grid — produtos reais DestaQ -->
+            <div class="container pricing-grid" style="padding-top: 1rem; padding-bottom: 5rem;">
+
+                <!-- 1. Extensão Adzen -->
+                <div class="glass-panel pricing-card">
+                    <div class="card-icon" style="color: var(--accent-gold);">
+                        <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2" fill="none"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M9 9h6v6H9z"></path><path d="M9 3v6M15 3v6M9 21v-6M15 21v-6M3 9h6M15 9h6M3 15h6M15 15h6"></path></svg>
+                    </div>
+                    <h3 class="pricing-title">Extensão Adzen</h3>
+                    <p class="pricing-subtitle">Automação e extração de métricas direto no Seller Center com auxílio pontual de IA.</p>
+                    <div class="price-box">
+                        <span class="currency">R$</span>
+                        <span class="amount" data-monthly="59,90" data-annual="47,92">47,92</span>
+                        <span class="period">/mês</span>
+                    </div>
+                    <ul class="features-list">
+                        <li><svg viewBox="0 0 24 24" width="16" height="16" stroke="#10b981" stroke-width="2" fill="none"><polyline points="20 6 9 17 4 12"></polyline></svg> Extração de campanhas e métricas na tela</li>
+                        <li><svg viewBox="0 0 24 24" width="16" height="16" stroke="#10b981" stroke-width="2" fill="none"><polyline points="20 6 9 17 4 12"></polyline></svg> Geração de palavras-chave e títulos com IA</li>
+                        <li><svg viewBox="0 0 24 24" width="16" height="16" stroke="#10b981" stroke-width="2" fill="none"><polyline points="20 6 9 17 4 12"></polyline></svg> Sugestões de prompts de imagem via Gemini</li>
+                        <li><svg viewBox="0 0 24 24" width="16" height="16" stroke="#10b981" stroke-width="2" fill="none"><polyline points="20 6 9 17 4 12"></polyline></svg> Injeção de barra de análise nativa na Shopee</li>
+                    </ul>
+                    <button class="btn btn-ghost pricing-cta">Começar grátis &mdash; 14 dias</button>
+                </div>
+
+                <!-- 2. Dashboard com Análise de IA -->
+                <div class="glass-panel pricing-card">
+                    <div class="card-icon" style="color: var(--accent-gold);">
+                        <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2" fill="none"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                    </div>
+                    <h3 class="pricing-title">Dashboard com Análise de IA</h3>
+                    <p class="pricing-subtitle">Plataforma web analítica com métricas avançadas e diagnóstico proativo via Inteligência Artificial.</p>
+                    <div class="price-box">
+                        <span class="currency">R$</span>
+                        <span class="amount" data-monthly="120,00" data-annual="96,00">96,00</span>
+                        <span class="period">/mês</span>
+                    </div>
+                    <ul class="features-list">
+                        <li><svg viewBox="0 0 24 24" width="16" height="16" stroke="#10b981" stroke-width="2" fill="none"><polyline points="20 6 9 17 4 12"></polyline></svg> Dashboard consolidado de KPIs (HOJE, 7d, 30d)</li>
+                        <li><svg viewBox="0 0 24 24" width="16" height="16" stroke="#10b981" stroke-width="2" fill="none"><polyline points="20 6 9 17 4 12"></polyline></svg> Chat direto com o Gestor de Tráfego IA (Zen)</li>
+                        <li><svg viewBox="0 0 24 24" width="16" height="16" stroke="#10b981" stroke-width="2" fill="none"><polyline points="20 6 9 17 4 12"></polyline></svg> Alertas proativos de saúde da conta/campanhas</li>
+                        <li><svg viewBox="0 0 24 24" width="16" height="16" stroke="#10b981" stroke-width="2" fill="none"><polyline points="20 6 9 17 4 12"></polyline></svg> Cálculo de custos e margem de lucro real</li>
+                    </ul>
+                    <button class="btn btn-ghost pricing-cta">Começar grátis &mdash; 14 dias</button>
+                </div>
+
+                <!-- 3. Dash + Extensão (1 conta) — MAIS POPULAR -->
+                <div class="glass-panel pricing-card pricing-popular">
+                    <div class="popular-badge">MAIS POPULAR</div>
+                    <div class="card-icon card-icon-popular" style="color: var(--accent-gold);">
+                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                    </div>
+                    <h3 class="pricing-title">Dash + Extensão (1 conta Shopee)</h3>
+                    <p class="pricing-subtitle">A solução completa integrando a captura da extensão com o poder do dashboard inteligente.</p>
+                    <div class="price-box">
+                        <span class="currency">R$</span>
+                        <span class="amount" data-monthly="199,00" data-annual="159,20">159,20</span>
+                        <span class="period">/mês</span>
+                    </div>
+                    <ul class="features-list">
+                        <li><svg viewBox="0 0 24 24" width="16" height="16" stroke="#10b981" stroke-width="2" fill="none"><polyline points="20 6 9 17 4 12"></polyline></svg> Todas as funções da Extensão Adzen</li>
+                        <li><svg viewBox="0 0 24 24" width="16" height="16" stroke="#10b981" stroke-width="2" fill="none"><polyline points="20 6 9 17 4 12"></polyline></svg> Todas as funções do Dashboard IA</li>
+                        <li><svg viewBox="0 0 24 24" width="16" height="16" stroke="#10b981" stroke-width="2" fill="none"><polyline points="20 6 9 17 4 12"></polyline></svg> Sincronização contínua de dados via Supabase</li>
+                        <li><svg viewBox="0 0 24 24" width="16" height="16" stroke="#10b981" stroke-width="2" fill="none"><polyline points="20 6 9 17 4 12"></polyline></svg> Gestão dedicada para 1 loja oficial</li>
+                    </ul>
+                    <button class="btn btn-ghost pricing-cta">Começar grátis &mdash; 14 dias</button>
+                </div>
+
+                <!-- 4. Dash + Extensão (2 contas) -->
+                <div class="glass-panel pricing-card">
+                    <div class="card-icon" style="color: var(--accent-gold);">
+                        <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    </div>
+                    <h3 class="pricing-title">Dash + Extensão (2 contas Shopee)</h3>
+                    <p class="pricing-subtitle">Toda a inteligência e extração da plataforma dimensionada para múltiplas operações. Base R$ 199 + R$ 29 pela segunda conta.</p>
+                    <div class="price-box">
+                        <span class="currency">R$</span>
+                        <span class="amount" data-monthly="228,00" data-annual="182,40">182,40</span>
+                        <span class="period">/mês</span>
+                    </div>
+                    <ul class="features-list">
+                        <li><svg viewBox="0 0 24 24" width="16" height="16" stroke="#10b981" stroke-width="2" fill="none"><polyline points="20 6 9 17 4 12"></polyline></svg> Tudo do plano Dash + Extensão (1 conta)</li>
+                        <li><svg viewBox="0 0 24 24" width="16" height="16" stroke="#10b981" stroke-width="2" fill="none"><polyline points="20 6 9 17 4 12"></polyline></svg> Conexão simultânea de 2 contas Shopee</li>
+                        <li><svg viewBox="0 0 24 24" width="16" height="16" stroke="#10b981" stroke-width="2" fill="none"><polyline points="20 6 9 17 4 12"></polyline></svg> Visão unificada e alternância de lojas</li>
+                        <li><svg viewBox="0 0 24 24" width="16" height="16" stroke="#10b981" stroke-width="2" fill="none"><polyline points="20 6 9 17 4 12"></polyline></svg> Custo-benefício agressivo na conta adicional</li>
+                    </ul>
+                    <button class="btn btn-ghost pricing-cta">Começar grátis &mdash; 14 dias</button>
+                </div>
+
+            </div>
+        </section>
+    </div> <!-- FIM DA ABA PLATAFORMAS -->
+
+    </div> <!-- FIM DO TABS-CONTAINER -->
+
+    <!-- CTA B2B Form Section -->
+    <section class="cta-b2b-section snap-section" id="demo-cta">
+        <div class="container container-tab">
+            <div class="glass-panel b2b-form-panel cta-b2b-animate">
+                <h2 style="font-family:'Satoshi',sans-serif; font-size:clamp(1.8rem,4vw,2.8rem); text-align:center; margin-bottom:0.5rem; line-height:1.2; font-weight:900; background:linear-gradient(90deg,var(--accent-pink),var(--accent-blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">
+                    Solicite uma demonstração
+                </h2>
+                <p class="tab-description" style="text-align: center; margin-bottom: 2rem;">Preencha os dados abaixo e nossa equipe entrará em contato em até 24h.</p>
+                
+                <form id="b2b-cta-form" class="b2b-form">
+                    <div class="form-group">
+                        <label for="b2b-name">Nome completo</label>
+                        <input type="text" id="b2b-name" name="name" required placeholder="Ex: João da Silva">
+                        <span class="error-msg">Por favor, insira seu nome completo.</span>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="b2b-company">Empresa</label>
+                            <input type="text" id="b2b-company" name="company" required placeholder="Sua Empresa LTDA">
+                            <span class="error-msg">Insira o nome da empresa.</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="b2b-segment">Segmento</label>
+                            <select id="b2b-segment" name="segment" required>
+                                <option value="" disabled selected>Selecione um segmento</option>
+                                <option value="Fashion">Fashion</option>
+                                <option value="Casa & Deco">Casa & Deco</option>
+                                <option value="Eletrônicos">Eletrônicos</option>
+                                <option value="Alimentos">Alimentos</option>
+                                <option value="Outro">Outro</option>
+                            </select>
+                            <span class="error-msg">Selecione um segmento.</span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="b2b-email">E-mail corporativo</label>
+                            <input type="email" id="b2b-email" name="email" required placeholder="voce@suaempresa.com.br">
+                            <span class="error-msg">Use um e-mail corporativo válido (gmail/hotmail não são aceitos).</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="b2b-whatsapp">WhatsApp</label>
+                            <input type="tel" id="b2b-whatsapp" name="whatsapp" required placeholder="(00) 00000-0000" maxlength="15">
+                            <span class="error-msg">Insira um número de WhatsApp válido.</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Volume mensal de pedidos</label>
+                        <div class="radio-group">
+                            <label class="radio-label"><input type="radio" name="volume" value="&lt;500" required> <span>&lt; 500</span></label>
+                            <label class="radio-label"><input type="radio" name="volume" value="500-2k"> <span>500 a 2k</span></label>
+                            <label class="radio-label"><input type="radio" name="volume" value="2k-10k"> <span>2k a 10k</span></label>
+                            <label class="radio-label"><input type="radio" name="volume" value="10k+"> <span>10k+</span></label>
+                        </div>
+                        <span class="error-msg">Selecione o volume de pedidos.</span>
+                    </div>
+
+                    <button type="submit" id="b2b-submit-btn" class="btn btn-gold btn-large" style="width: 100%; margin-top: 1rem; border-radius: 8px;">
+                        <span class="btn-text">Solicitar Demonstração</span>
+                    </button>
+                </form>
+
+                <div id="b2b-success-state" class="success-state" style="display: none;">
+                    <svg viewBox="0 0 24 24" width="80" height="80" stroke="var(--accent-gold)" stroke-width="2" fill="none"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <h3 style="font-size: 2.5rem; color: #fff; margin: 1rem 0; font-family: 'Bebas Neue', cursive; letter-spacing: 2px;">Tudo certo!</h3>
+                    <p style="color: rgba(255,255,255,0.8); font-size: 1.2rem;">Em breve nossa equipe entrará em contato com você.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SIDEBAR DE PROGRESSO LATERAL -->
+    <nav id="fixed-progress-sidebar">
+        <div class="progress-track">
+            <div class="progress-fill-line"></div>
+        </div>
+        <div class="progress-dots">
+            <div class="nav-dot active" data-scroll-to="#hero" title="Topo"></div>
+            <div class="nav-dot" data-scroll-to="#produtos" title="Catálogo"></div>
+            <div class="nav-dot" data-scroll-to="#tabs-container" title="Sistemas"></div>
+            <div class="nav-dot" data-scroll-to="#cta-final" title="Ação"></div>
+            <div class="nav-dot" data-scroll-to="#main-footer" title="Fim"></div>
+        </div>
+    </nav>
+
+    <!-- FOOTER PRINCIPAL -->
+    <footer id="main-footer" class="snap-section" style="background:#070B14; padding: 5rem 0 3rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); position:relative; overflow:hidden;">
+        <div class="container">
+            <h2 class="dq-logo" style="margin-bottom: 2rem; font-size:2.5rem;">Desta<span style="color: var(--accent-gold);">Q</span></h2>
+            
+            <ul class="footer-links" style="list-style:none; display:flex; gap:2rem; justify-content:center; flex-wrap:wrap; margin-bottom:3rem;">
+                <li><a href="#" class="footer-nav ripple-btn" style="color:rgba(255,255,255,0.6); text-decoration:none; font-weight:600;">Termos de Uso</a></li>
+                <li><a href="#" class="footer-nav ripple-btn" style="color:rgba(255,255,255,0.6); text-decoration:none; font-weight:600;">Privacidade</a></li>
+                <li><a href="#" class="footer-nav ripple-btn" style="color:rgba(255,255,255,0.6); text-decoration:none; font-weight:600;">Documentação API</a></li>
+                <li><a href="#" class="footer-nav ripple-btn" style="color:rgba(255,255,255,0.6); text-decoration:none; font-weight:600;">Status do Sistema</a></li>
+            </ul>
+
+            <div class="copyright neural-split-text" data-aos="fade-up" data-aos-delay="100" data-aos-duration="600" style="color:rgba(255,255,255,0.4); font-size:0.9rem; margin-bottom: 0.5rem;">
+                © 2026 DestaQ. Todos os direitos reservados.
+            </div>
+            <p class="secondary-info" data-aos="fade-up" data-aos-delay="200" data-aos-duration="600" style="color:rgba(255,255,255,0.3); font-size:0.8rem;">
+                Uma experiência digital focada em animações e conversões avançadas.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Cookie Consent Banner LGPD -->
+    <div id="cookie-consent" class="cookie-banner glass-panel">
+        <div class="cookie-content">
+            <p>Usamos cookies para analytics e personalização da experiência</p>
+        </div>
+        <div class="cookie-actions">
+            <button id="btn-cookie-essentials" class="btn btn-ghost" style="border-color: rgba(255,255,255,0.2); font-size: 1rem; padding: 0.8rem 1.5rem;"><span class="btn-text">Apenas essenciais</span></button>
+            <button id="btn-cookie-accept" class="btn btn-primary-gradient" style="font-size: 1rem; padding: 0.8rem 1.5rem;"><span class="btn-text">Aceitar todos</span></button>
+        </div>
+    </div>
+
+    <!-- FIM DO CORPO DA PÁGINA -->
+    <!-- GSAP / ScrollTrigger Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    
+    <!-- AOS Script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    
+    <!-- Confetti Script -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <!-- Auth global (antes de script.js / network.js — inicializa Supabase partilhado) -->
+    <script type="module" src="auth.js"></script>
+    <!-- Custom JS -->
+    <script type="module" src="script.js"></script>
+    <script type="module" src="network.js"></script>
+
+    <!-- Mascote B2B DeQ -->
+    <div id="deq-mascot" class="deq-mascot-wrap">
+        <div class="deq-bubble" id="deqBubble">
+            <p id="deqBubbleText">Olá! Sou o DeQ 👋</p>
+            <button onclick="DEQ.dismiss()">×</button>
+        </div>
+        <div class="deq-float" onclick="DEQ.interact()">
+            <div class="deq-body" id="deqBody">
+                <svg viewBox="0 0 100 120" width="60" height="80" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Sinal de Exclamação -->
+                    <circle cx="50" cy="100" r="10" fill="#FFFFFF" />
+                    <path d="M 40 10 L 60 10 L 55 80 L 45 80 Z" fill="#FFFFFF" />
+                </svg>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
