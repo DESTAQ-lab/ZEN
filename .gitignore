@@ -9,5 +9,8 @@ dist/
 # Dependências
 node_modules/
 
+# Supabase CLI (local)
+supabase/.temp/
+
 # Se alguém voltar a colocar segredos em config.js, descomente:
 # config.js
