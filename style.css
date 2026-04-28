@@ -2183,6 +2183,10 @@ img.gsap-img:hover {
     stroke: #7c3aed !important;
 }
 #aba-plataformas .pricing-cta {
+    display: inline-block;
+    box-sizing: border-box;
+    text-align: center;
+    text-decoration: none;
     width: 100%;
     border-color: rgba(148, 163, 184, 0.5) !important;
     color: #0f172a !important;
