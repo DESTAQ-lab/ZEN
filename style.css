@@ -93,6 +93,13 @@ html, body {
     display: grid !important;
 }
 
+img,
+picture,
+video {
+    max-width: 100%;
+    height: auto;
+}
+
 body {
     background-color: var(--primary-dark);
     color: var(--text-primary);
@@ -125,7 +132,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .section-title {
-    font-size: 4rem;
+    font-size: clamp(2rem, 8vw, 4rem);
     margin-bottom: 2rem;
 }
 
@@ -5580,4 +5587,236 @@ body.dq-tab-network-active::after {
 .product-catalog-topbar h3,
 .product-rss-info h4 {
     color: #0b1220 !important;
+}
+
+/* ========== RESPONSIVIDADE CONSOLIDADA (tablet ≤768px, mobile ≤480px) ==========
+   Sobrescreve estilos inline do hero/footer onde necessário; evita overflow horizontal. */
+
+@media (max-width: 768px) {
+    .dq-nav .nav-container.glass-panel {
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 14px !important;
+        border-radius: 28px !important;
+        row-gap: 0.65rem;
+        column-gap: 0.75rem;
+        max-width: calc(100vw - 16px);
+        margin-left: auto;
+        margin-right: auto;
+        box-sizing: border-box;
+    }
+
+    .dq-nav .nav-container .dq-logo {
+        font-size: clamp(1.45rem, 6vw, 2rem);
+    }
+
+    .dq-nav .nav-buttons {
+        flex: 1 1 auto;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.65rem !important;
+        min-width: 0;
+    }
+
+    .dq-nav .nav-buttons .btn-ghost,
+    .dq-nav .nav-buttons .btn-gold {
+        padding: 0.45rem 0.85rem !important;
+        font-size: 0.875rem !important;
+        white-space: nowrap;
+    }
+
+    #hero .hero-title.gsap-title {
+        font-size: clamp(1.65rem, 6.5vw, 2.35rem) !important;
+        line-height: 1.15 !important;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+
+    #hero .hero-subtitle.typewriter-text {
+        font-size: 1rem !important;
+        max-width: 100% !important;
+    }
+
+    #hero .social-proof {
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        text-align: center;
+    }
+
+    #hero .social-proof span {
+        font-size: 12px !important;
+        line-height: 1.45 !important;
+    }
+
+    #hero .hero-buttons {
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 12px !important;
+    }
+
+    #hero .hero-buttons .btn {
+        flex: 1 1 auto;
+        min-width: min(100%, 280px);
+        max-width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+    }
+
+    .hero {
+        padding-top: clamp(88px, 22vw, 120px);
+        padding-left: max(0px, env(safe-area-inset-left, 0px));
+        padding-right: max(0px, env(safe-area-inset-right, 0px));
+    }
+
+    .hero .container.hero-content {
+        padding-left: max(4%, env(safe-area-inset-left, 0px));
+        padding-right: max(4%, env(safe-area-inset-right, 0px));
+    }
+
+    .tab-hero {
+        padding: clamp(6rem, 18vw, 10rem) 1rem 4rem;
+        box-sizing: border-box;
+    }
+
+    .scroll-progress-container {
+        display: none;
+    }
+
+    #main-footer {
+        padding: 3rem 1rem 2rem !important;
+        box-sizing: border-box;
+    }
+
+    #main-footer .footer-links {
+        gap: 1rem !important;
+        flex-direction: column;
+        align-items: center;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .cta-b2b-section {
+        padding: 4rem 0;
+    }
+
+    .b2b-form-panel {
+        padding: 1.75rem !important;
+        margin-left: auto;
+        margin-right: auto;
+        width: calc(100% - 2rem);
+        max-width: min(800px, 100%);
+        box-sizing: border-box;
+    }
+
+    #aba-plataformas .pricing-toggle-wrapper {
+        flex-wrap: wrap;
+        gap: 0.65rem;
+        padding: 0 10px;
+        justify-content: center;
+    }
+
+    #aba-plataformas .pricing-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .catalog-grid,
+    .network-grid {
+        min-width: 0;
+    }
+
+    .tab-title {
+        font-size: clamp(1.85rem, 7vw, 2.75rem) !important;
+    }
+
+    .community-header,
+    .network-header {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .network-layout {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 24px 14px;
+    }
+
+    .network-sidebar {
+        position: static;
+    }
+
+    .news-regular-grid,
+    .news-loading-skeleton {
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    #splash-screen .splash-logo {
+        font-size: clamp(2.25rem, 12vw, 3.25rem) !important;
+        letter-spacing: -1px !important;
+        justify-content: center;
+        flex-wrap: wrap;
+        max-width: 100%;
+        padding: 0 12px;
+        box-sizing: border-box;
+    }
+
+    #hero .hero-title.gsap-title {
+        font-size: clamp(1.28rem, 7vw, 1.85rem) !important;
+    }
+
+    #hero .hero-buttons {
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+
+    #hero .hero-buttons .btn {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .dq-logo {
+        font-size: 1.45rem !important;
+    }
+
+    .section-title {
+        font-size: clamp(1.65rem, 9vw, 2.35rem);
+    }
+
+    .dq-sections-rail {
+        left: max(4px, env(safe-area-inset-left, 0px));
+        max-height: min(62vh, 420px);
+    }
+
+    #tabs-container {
+        padding-left: max(0px, calc(2.85rem + env(safe-area-inset-left, 0px)));
+    }
+
+    .tab-buttons {
+        width: 100%;
+    }
+
+    .cookie-banner.cookie-banner {
+        margin: 10px !important;
+        width: calc(100% - 20px) !important;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    #aba-plataformas .pricing-popular {
+        transform: none !important;
+    }
+
+    #aba-plataformas .pricing-popular:hover {
+        transform: none !important;
+    }
+
+    .stat-wrapper {
+        font-size: clamp(1.85rem, 9vw, 2.75rem);
+    }
+
+    .stat-prefix,
+    .stat-suffix {
+        font-size: clamp(1.35rem, 6vw, 2rem);
+    }
 }

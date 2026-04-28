@@ -1207,7 +1207,7 @@
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   #aba-network.tab-pane.active #network-content {
     padding-top: 64px;
   }
@@ -1421,7 +1421,7 @@
 }
 
 /* Mobile: coluna única + bottom nav simples Feed/Chat */
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   #network-content .nw-app {
     grid-template-columns: 1fr !important;
     background: #fff !important;
@@ -2122,7 +2122,7 @@
   font-size: 0.62rem;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   #network-content .nw-app:has(#nw-view-chat.is-active) .nw-bottom-nav {
     display: none;
   }
@@ -2140,5 +2140,17 @@
     background: var(--nw-bg);
     padding-top: env(safe-area-inset-top, 0);
     padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+}
+
+/* Grades flex/grid sem largura mínima implícita — evita overflow horizontal no mobile */
+#network-content .nw-app {
+  min-width: 0;
+}
+
+@media (max-width: 1024px) {
+  #network-content .nw-center,
+  #network-content .nw-sidebar {
+    min-width: 0;
   }
 }
