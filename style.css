@@ -153,34 +153,42 @@ h1, h2, h3, h4, h5, h6 {
     box-sizing: border-box;
 }
 
-.hero-owl-bg-canvas {
-    position: absolute;
-    top: 50%;
-    left: 4%;
-    transform: translateY(-50%);
-    width: 44%;
-    height: 70%;
-    max-height: 640px;
+/* Coruja na coluna 1 do grid (fluxo normal — não sobrepõe o texto no mobile) */
+.hero .hero-content.hero-content-split > .hero-owl-bg-canvas {
+    position: relative;
+    grid-column: 1;
+    grid-row: 1;
+    align-self: center;
+    justify-self: center;
+    width: 100%;
+    max-width: min(52vw, 640px);
+    height: auto;
+    aspect-ratio: 1;
+    max-height: min(72vh, 680px);
+    min-height: 200px;
     z-index: 2;
     pointer-events: none;
     opacity: 1;
     mix-blend-mode: multiply;
     background: transparent;
     filter: contrast(1.08) saturate(1.05);
+    -webkit-mask-image: radial-gradient(ellipse 70% 75% at 50% 55%, #000 50%, rgba(0, 0, 0, 0.6) 72%, transparent 92%);
+    mask-image: radial-gradient(ellipse 70% 75% at 50% 55%, #000 50%, rgba(0, 0, 0, 0.6) 72%, transparent 92%);
 }
 
 .hero .hero-content.hero-content-split {
     display: grid !important;
-    grid-template-columns: 45% 55% !important;
-    gap: 2rem !important;
+    grid-template-columns: minmax(240px, 45%) minmax(0, 55%) !important;
+    gap: 1rem 1.75rem !important;
     align-items: center !important;
     min-height: 100vh;
 }
 
 .hero .hero-content.hero-content-split .hero-text-col.hero-text-right {
     grid-column: 2 !important;
-    justify-self: start !important;
-    max-width: 620px !important;
+    justify-self: stretch !important;
+    align-self: center;
+    max-width: none !important;
     background: transparent !important;
     border: 0 !important;
     padding: 0 !important;
@@ -208,51 +216,66 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (max-width: 900px) {
-    .hero-content-split {
-        grid-template-columns: 1fr !important;
+    /* Mobile/tablet: coruja à esquerda, copy à direita (mesma linha do grid) */
+    .hero .hero-content.hero-content-split {
+        grid-template-columns: clamp(72px, 30vw, 124px) minmax(0, 1fr) !important;
+        gap: 0.45rem 0.65rem !important;
+        align-items: center !important;
         min-height: auto !important;
         justify-items: stretch !important;
     }
-    .hero-content-split .hero-text-right {
-        grid-column: 1;
-        justify-self: stretch;
-        text-align: center !important;
-        max-width: 100%;
-        width: 100%;
-        padding-inline: max(0.75rem, env(safe-area-inset-left, 0px))
-            max(0.75rem, env(safe-area-inset-right, 0px));
-        box-sizing: border-box;
-    }
-    .hero-owl-bg-canvas {
-        position: relative;
-        top: auto;
-        left: auto;
-        transform: none;
-        width: min(92vw, 420px);
-        max-width: 420px;
-        height: 360px;
-        margin: 0 auto 1.25rem;
-        opacity: 1;
-        display: block;
+
+    .hero .hero-content.hero-content-split > .hero-owl-bg-canvas {
+        grid-column: 1 !important;
+        max-width: none !important;
+        width: 100% !important;
+        max-height: min(46vw, 220px) !important;
+        min-height: 96px !important;
+        aspect-ratio: 1 !important;
+        justify-self: center;
+        align-self: center;
     }
 
-    /* Inline styles da home pedem flex-start — centraliza no empilhamento */
+    .hero-content-split .hero-text-right {
+        grid-column: 2 !important;
+        justify-self: stretch !important;
+        text-align: left !important;
+        max-width: none !important;
+        width: auto !important;
+        min-width: 0;
+        padding-inline: 0 max(0.35rem, env(safe-area-inset-right, 0px));
+        box-sizing: border-box;
+    }
+
+    /* Copy alinhada ao bloco da direita (evita “torto”) */
     #hero .eco-tag.fade-in {
-        margin-inline: auto;
-        justify-content: center;
-        text-align: center;
+        margin-inline: 0 auto;
+        justify-content: flex-start;
+        text-align: left;
         flex-wrap: wrap;
+        max-width: 100%;
     }
 
     #hero .social-proof.fade-in {
-        justify-content: center !important;
+        justify-content: flex-start !important;
+        flex-wrap: wrap;
+        gap: 10px !important;
+    }
+
+    #hero .social-proof.fade-in span {
+        text-align: left !important;
+    }
+
+    #hero .hero-buttons.fade-in {
+        justify-content: flex-start !important;
+        flex-wrap: wrap;
     }
 
     #hero .microcopy.fade-in {
-        text-align: center;
+        text-align: left;
     }
 
-    /* Mesmo entre tablet e mobile: hero alinhado ao centro da viewport */
+    /* Compensa rail — grid usa largura total sem max artificial */
     #tabs-container #hero {
         margin-left: calc(-1 * var(--tabs-rail-pad));
         width: calc(100% + var(--tabs-rail-pad));
@@ -260,18 +283,25 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     #tabs-container #hero .hero-content.hero-content-split {
-        padding-left: max(1rem, calc(12px + env(safe-area-inset-left, 0px)));
-        padding-right: max(1rem, env(safe-area-inset-right, 0px));
-        margin-inline: auto;
+        padding-left: max(0.65rem, calc(8px + env(safe-area-inset-left, 0px)));
+        padding-right: max(0.65rem, env(safe-area-inset-right, 0px));
+        margin-inline: 0;
         box-sizing: border-box;
         width: 100%;
-        max-width: min(640px, 100%);
+        max-width: none;
     }
 
     #tabs-container .hero {
         padding-left: 0;
         padding-right: 0;
-        align-items: center;
+        align-items: stretch;
+    }
+}
+
+@media (max-width: 900px) and (max-height: 520px) {
+    .hero .hero-content.hero-content-split > .hero-owl-bg-canvas {
+        max-height: min(38vw, 140px) !important;
+        min-height: 72px !important;
     }
 }
 
@@ -5370,43 +5400,7 @@ h1, h2, h3 {
     opacity: 1 !important;
 }
 
-#hero-canvas.hero-owl-bg-canvas {
-    position: absolute !important;
-    top: 50% !important;
-    left: 2% !important;
-    transform: translateY(-50%) !important;
-    width: 46% !important;
-    max-width: 640px !important;
-    height: 80% !important;
-    max-height: 680px !important;
-    z-index: 2 !important;
-    background: transparent !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    animation: none !important;
-    filter: contrast(1.1) saturate(1.08) brightness(1.03) !important;
-    mix-blend-mode: multiply !important;
-    pointer-events: none !important;
-    -webkit-mask-image: radial-gradient(ellipse 70% 75% at 50% 55%, #000 50%, rgba(0,0,0,0.6) 72%, transparent 92%);
-    mask-image: radial-gradient(ellipse 70% 75% at 50% 55%, #000 50%, rgba(0,0,0,0.6) 72%, transparent 92%);
-}
-
-@media (max-width: 900px) {
-    #hero-canvas.hero-owl-bg-canvas {
-        position: relative !important;
-        top: auto !important;
-        left: auto !important;
-        transform: none !important;
-        width: min(92vw, 420px) !important;
-        max-width: 420px !important;
-        height: 360px !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-        margin-bottom: 1.25rem !important;
-        display: block !important;
-    }
-}
+/* Posição/tamanho da coruja: apenas no grid (.hero-content-split > canvas); sem absolute aqui */
 
 /* ===== HOW WE WORK (Home) ===== */
 .how-we-work-section {
@@ -5690,24 +5684,25 @@ body.dq-tab-network-active::after {
 
     #hero .social-proof {
         flex-wrap: wrap !important;
-        justify-content: center !important;
-        text-align: center;
+        justify-content: flex-start !important;
+        text-align: left;
     }
 
     #hero .social-proof span {
         font-size: 12px !important;
         line-height: 1.45 !important;
+        text-align: left !important;
     }
 
     #hero .hero-buttons {
         flex-wrap: wrap !important;
-        justify-content: center !important;
+        justify-content: flex-start !important;
         gap: 12px !important;
     }
 
     #hero .hero-buttons .btn {
-        flex: 1 1 auto;
-        min-width: min(100%, 280px);
+        flex: 0 1 auto;
+        min-width: 0;
         max-width: 100%;
         box-sizing: border-box;
         text-align: center;
