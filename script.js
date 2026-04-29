@@ -229,6 +229,46 @@ const polygonContainer = document.getElementById('floating-container');
 // ===== TAB NAVIGATION SYSTEM (DEEP-LINKING) =====
 const navTabs = document.querySelectorAll('.nav-tab');
 const tabPanes = document.querySelectorAll('.tab-pane');
+const railToggleBtn = document.getElementById('dq-rail-toggle');
+
+function syncRailToggleVisualState() {
+    if (!railToggleBtn) return;
+    const collapsed = document.body.classList.contains('dq-rail-collapsed');
+    railToggleBtn.setAttribute('aria-expanded', String(!collapsed));
+    railToggleBtn.setAttribute('aria-label', collapsed ? 'Expandir menu lateral' : 'Recolher menu lateral');
+}
+
+function applyRailState(collapsed) {
+    document.body.classList.toggle('dq-rail-collapsed', collapsed);
+    syncRailToggleVisualState();
+}
+
+function initRailState() {
+    const isMobile = window.matchMedia('(max-width: 900px)').matches;
+    const storageKey = isMobile ? 'dqRailCollapsedMobile' : 'dqRailCollapsedDesktop';
+    const saved = localStorage.getItem(storageKey);
+
+    // Mobile: default recolhido para centralizar hero.
+    const defaultCollapsed = isMobile ? true : false;
+    applyRailState(saved === null ? defaultCollapsed : saved === '1');
+    document.body.classList.toggle('dq-rail-open-mobile', !document.body.classList.contains('dq-rail-collapsed'));
+}
+
+if (railToggleBtn) {
+    railToggleBtn.addEventListener('click', () => {
+        const nextCollapsed = !document.body.classList.contains('dq-rail-collapsed');
+        applyRailState(nextCollapsed);
+
+        const isMobile = window.matchMedia('(max-width: 900px)').matches;
+        const storageKey = isMobile ? 'dqRailCollapsedMobile' : 'dqRailCollapsedDesktop';
+        localStorage.setItem(storageKey, nextCollapsed ? '1' : '0');
+        document.body.classList.toggle('dq-rail-open-mobile', !nextCollapsed);
+    });
+}
+
+window.addEventListener('resize', () => {
+    initRailState();
+});
 
 const tabMap = {
     "home": { id: "aba-home", title: "DestaQ | Ecossistema B2B" },
@@ -467,6 +507,7 @@ if (currentHash === '') {
 const initialTab = tabMap[currentHash] ? currentHash : "home";
 // Após todos os scripts síncronos (ex.: network.js) para deep-link #network e renderNetworkTab
 document.addEventListener('DOMContentLoaded', () => {
+    initRailState();
     bindHomeCtas();
     activateTab(initialTab, false, false);
 });

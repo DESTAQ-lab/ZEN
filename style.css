@@ -992,6 +992,7 @@ body.dq-nav-retracted .dq-top-nav-reveal {
     box-shadow: 4px 12px 40px rgba(8, 6, 20, 0.1);
     max-height: min(88vh, 520px);
     overflow-y: auto;
+    transition: transform 0.28s ease, opacity 0.22s ease;
 }
 
 .dq-sections-rail__list {
@@ -1064,6 +1065,57 @@ body.dq-nav-retracted .dq-top-nav-reveal {
     --tabs-rail-pad: max(0px, calc(4.5rem + env(safe-area-inset-left, 0px)));
 }
 
+.dq-rail-toggle {
+    position: fixed;
+    left: max(10px, env(safe-area-inset-left, 0px));
+    top: calc(50% - 132px);
+    z-index: 9100;
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    border: 1px solid rgba(8, 6, 20, 0.14);
+    background: rgba(253, 253, 251, 0.96);
+    color: #0f172a;
+    box-shadow: 4px 12px 30px rgba(8, 6, 20, 0.12);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    transition: transform 0.2s ease, left 0.28s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.dq-rail-toggle:hover {
+    transform: scale(1.05);
+}
+
+.dq-rail-toggle__icon {
+    display: inline-block;
+    font-size: 0.92rem;
+    line-height: 1;
+    transform: translateX(-1px);
+}
+
+body.dq-rail-collapsed .dq-sections-rail {
+    transform: translate(calc(-100% - 18px), -50%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+body.dq-rail-collapsed #tabs-container {
+    padding-left: max(0px, env(safe-area-inset-left, 0px));
+    --tabs-rail-pad: max(0px, env(safe-area-inset-left, 0px));
+}
+
+body.dq-rail-collapsed .dq-rail-toggle {
+    left: max(8px, env(safe-area-inset-left, 0px));
+}
+
+body.dq-rail-collapsed .dq-rail-toggle__icon {
+    transform: rotate(180deg);
+}
+
 @media (max-width: 640px) {
     .dq-sections-rail {
         left: max(6px, env(safe-area-inset-left, 0px));
@@ -1084,6 +1136,13 @@ body.dq-nav-retracted .dq-top-nav-reveal {
     #tabs-container {
         padding-left: max(0px, calc(3.25rem + env(safe-area-inset-left, 0px)));
         --tabs-rail-pad: max(0px, calc(3.25rem + env(safe-area-inset-left, 0px)));
+    }
+
+    .dq-rail-toggle {
+        left: max(6px, env(safe-area-inset-left, 0px));
+        top: calc(50% - 110px);
+        width: 30px;
+        height: 30px;
     }
 }
 
@@ -3059,6 +3118,66 @@ body.custom-cursor .nav-tab {
     }
     .social-proof {
         justify-content: center !important;
+    }
+}
+
+/* ===== Ajustes finais: rail retrátil + hero mobile centralizado ===== */
+@media (max-width: 900px) {
+    .dq-rail-toggle {
+        top: calc(50% - 90px);
+    }
+
+    /* Por padrão no telemóvel: rail recolhido para centralizar conteúdo */
+    body:not(.dq-rail-open-mobile) .dq-sections-rail {
+        transform: translate(calc(-100% - 14px), -50%);
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    body:not(.dq-rail-open-mobile) #tabs-container {
+        padding-left: max(0px, env(safe-area-inset-left, 0px));
+        --tabs-rail-pad: max(0px, env(safe-area-inset-left, 0px));
+    }
+
+    /* Coruja como background atrás do título */
+    #tabs-container #hero .hero-content.hero-content-split {
+        grid-template-columns: 1fr !important;
+        position: relative;
+        max-width: min(760px, 100%) !important;
+        margin-inline: auto !important;
+    }
+
+    #tabs-container #hero .hero-content.hero-content-split > .hero-owl-bg-canvas {
+        position: absolute !important;
+        inset: clamp(62px, 14vw, 100px) 0 auto 50%;
+        width: min(88vw, 460px) !important;
+        height: min(88vw, 460px) !important;
+        max-height: 460px !important;
+        transform: translateX(-50%) !important;
+        opacity: 0.2;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    #tabs-container #hero .hero-content.hero-content-split .hero-text-col.hero-text-right {
+        grid-column: 1 !important;
+        position: relative;
+        z-index: 2;
+        text-align: center !important;
+        padding-left: max(0.85rem, calc(8px + env(safe-area-inset-left, 0px))) !important;
+        padding-right: max(0.85rem, env(safe-area-inset-right, 0px)) !important;
+    }
+
+    #hero .eco-tag.fade-in,
+    #hero .social-proof.fade-in,
+    #hero .hero-buttons.fade-in {
+        justify-content: center !important;
+        margin-inline: auto !important;
+    }
+
+    #hero .social-proof.fade-in span,
+    #hero .microcopy.fade-in {
+        text-align: center !important;
     }
 }
 
