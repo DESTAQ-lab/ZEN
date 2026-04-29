@@ -210,23 +210,68 @@ h1, h2, h3, h4, h5, h6 {
 @media (max-width: 900px) {
     .hero-content-split {
         grid-template-columns: 1fr !important;
+        min-height: auto !important;
+        justify-items: stretch !important;
     }
     .hero-content-split .hero-text-right {
         grid-column: 1;
-        justify-self: center;
+        justify-self: stretch;
         text-align: center !important;
-        max-width: 640px;
+        max-width: 100%;
+        width: 100%;
+        padding-inline: max(0.75rem, env(safe-area-inset-left, 0px))
+            max(0.75rem, env(safe-area-inset-right, 0px));
+        box-sizing: border-box;
     }
     .hero-owl-bg-canvas {
         position: relative;
         top: auto;
         left: auto;
         transform: none;
-        width: 80%;
+        width: min(92vw, 420px);
         max-width: 420px;
         height: 360px;
-        margin: 0 auto 1.5rem;
+        margin: 0 auto 1.25rem;
         opacity: 1;
+        display: block;
+    }
+
+    /* Inline styles da home pedem flex-start — centraliza no empilhamento */
+    #hero .eco-tag.fade-in {
+        margin-inline: auto;
+        justify-content: center;
+        text-align: center;
+        flex-wrap: wrap;
+    }
+
+    #hero .social-proof.fade-in {
+        justify-content: center !important;
+    }
+
+    #hero .microcopy.fade-in {
+        text-align: center;
+    }
+
+    /* Mesmo entre tablet e mobile: hero alinhado ao centro da viewport */
+    #tabs-container #hero {
+        margin-left: calc(-1 * var(--tabs-rail-pad));
+        width: calc(100% + var(--tabs-rail-pad));
+        box-sizing: border-box;
+    }
+
+    #tabs-container #hero .hero-content.hero-content-split {
+        padding-left: max(1rem, calc(12px + env(safe-area-inset-left, 0px)));
+        padding-right: max(1rem, env(safe-area-inset-right, 0px));
+        margin-inline: auto;
+        box-sizing: border-box;
+        width: 100%;
+        max-width: min(640px, 100%);
+    }
+
+    #tabs-container .hero {
+        padding-left: 0;
+        padding-right: 0;
+        align-items: center;
     }
 }
 
@@ -986,6 +1031,7 @@ body.dq-nav-retracted .dq-top-nav-reveal {
 /* Rail visível em todas as guias (Produtos, Comunidade, Network, Plataformas, Home) */
 #tabs-container {
     padding-left: max(0px, calc(4.5rem + env(safe-area-inset-left, 0px)));
+    --tabs-rail-pad: max(0px, calc(4.5rem + env(safe-area-inset-left, 0px)));
 }
 
 @media (max-width: 640px) {
@@ -1007,6 +1053,7 @@ body.dq-nav-retracted .dq-top-nav-reveal {
 
     #tabs-container {
         padding-left: max(0px, calc(3.25rem + env(safe-area-inset-left, 0px)));
+        --tabs-rail-pad: max(0px, calc(3.25rem + env(safe-area-inset-left, 0px)));
     }
 }
 
@@ -5351,10 +5398,13 @@ h1, h2, h3 {
         top: auto !important;
         left: auto !important;
         transform: none !important;
-        width: 80% !important;
+        width: min(92vw, 420px) !important;
         max-width: 420px !important;
         height: 360px !important;
-        margin: 0 auto 1.5rem !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        margin-bottom: 1.25rem !important;
+        display: block !important;
     }
 }
 
@@ -5665,13 +5715,6 @@ body.dq-tab-network-active::after {
 
     .hero {
         padding-top: clamp(88px, 22vw, 120px);
-        padding-left: max(0px, env(safe-area-inset-left, 0px));
-        padding-right: max(0px, env(safe-area-inset-right, 0px));
-    }
-
-    .hero .container.hero-content {
-        padding-left: max(4%, env(safe-area-inset-left, 0px));
-        padding-right: max(4%, env(safe-area-inset-right, 0px));
     }
 
     .tab-hero {
@@ -5790,6 +5833,7 @@ body.dq-tab-network-active::after {
 
     #tabs-container {
         padding-left: max(0px, calc(2.85rem + env(safe-area-inset-left, 0px)));
+        --tabs-rail-pad: max(0px, calc(2.85rem + env(safe-area-inset-left, 0px)));
     }
 
     .tab-buttons {
